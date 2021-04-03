@@ -178,7 +178,7 @@ class Productcontract extends Contract {
             },
             "use_index": ["productTypeIndexDoc", "ProductTypeIndex"]
         } 
-        let queryResults = this.queryWithQueryString(ctx, queryString);
+        let queryResults = this.queryWithQueryString(ctx, JSON.stringify(queryString));
     return queryResults;
 
 }
@@ -196,11 +196,11 @@ class Productcontract extends Contract {
          //    Pass the query string built to the queryWithQueryString()
         let queryString={
             "selector":{
-                "productType": productType
+                "productType": mfg_date
             },
             "use_index": ["mfg_dateIndexDoc", "mfg_dateIndex"]
         } 
-        let queryResults = this.queryWithQueryString(ctx, queryString);
+        let queryResults = this.queryWithQueryString(ctx, JSON.stringify(queryString));
     return queryResults;
 
 }
@@ -226,7 +226,7 @@ class Productcontract extends Contract {
             },
             "use_index": ["productTypeIndexDoc", "ProductTypeIndex"]
         } 
-        let queryResults = this.queryWithQueryString(ctx, queryString);
+        let queryResults = this.queryWithQueryString(ctx, JSON.stringify(queryString));
     return queryResults;
 
 }
