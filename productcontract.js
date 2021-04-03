@@ -87,7 +87,7 @@ class Productcontract extends Contract {
         let precordKey = ProductRecord.makeKey([productId,name]);
         //TASK-1: Use a method from productRecord to read a record by key
         // get product record by calling the method of ProductList class
-        precord = ctx.productList.getPRecord(precordKey);
+        precord = await ctx.productList.getPRecord(precordKey);
         //Task 1 end
         return JSON.stringify(precord)
     }
@@ -106,9 +106,9 @@ class Productcontract extends Contract {
         //TASK-3: Use a method from productList to read a record by key
         //Use set_quantity from ProductRecord to update the quantity field
         //Use updatePRecord from productList to update the record on the ledger
-        precord = ctx.productList.getPRecord(pecordKey);
+        precord = await ctx.productList.getPRecord(pecordKey);
         precord.setQuantity(quantity);
-        ctx.productList.updatePRecord(precord);
+        await ctx.productList.updatePRecord(precord);
         //Task 3 end
         return precord.toBuffer();
     }
