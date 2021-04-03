@@ -106,7 +106,7 @@ class Productcontract extends Contract {
         //TASK-3: Use a method from productList to read a record by key
         //Use set_quantity from ProductRecord to update the quantity field
         //Use updatePRecord from productList to update the record on the ledger
-        let precord = await ctx.productList.getPRecord(pecordKey);
+        let precord = await ctx.productList.getPRecord(precordKey);
         precord.setQuantity(quantity);
         await ctx.productList.updatePRecord(precord);
         //Task 3 end
@@ -220,8 +220,8 @@ class Productcontract extends Contract {
         let queryString={
             "selector":{
                 "$or": [
-                    {"$productType": productType1},
-                    {"$productType": productType2}
+                    {"productType": productType1},
+                    {"productType": productType2}
                 ]
             },
             "use_index": ["productTypeIndexDoc", "ProductTypeIndex"]
