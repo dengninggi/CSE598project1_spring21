@@ -52,7 +52,7 @@ class Productcontract extends Contract {
 
     async unknownTransaction(ctx){
         //GRADED FUNCTION
-        throw new Error()
+        throw new Error("Function name missing")
     }
 
 
@@ -87,6 +87,8 @@ class Productcontract extends Contract {
         let precordKey = ProductRecord.makeKey([productId,name]);
         //TASK-1: Use a method from productRecord to read a record by key
         // get product record by calling the method of ProductList class
+        precord = ctx.productList.getPRecord(precordKey);
+        //Task 1 end
         return JSON.stringify(precord)
     }
 
@@ -104,6 +106,10 @@ class Productcontract extends Contract {
         //TASK-3: Use a method from productList to read a record by key
         //Use set_quantity from ProductRecord to update the quantity field
         //Use updatePRecord from productList to update the record on the ledger
+        precord = ctx.productList.getPRecord(pecordKey);
+        precord.setQuantity(quantity);
+        ctx.productList.updatePRecord(precord);
+        //Task 3 end
         return precord.toBuffer();
     }
 
@@ -159,14 +165,20 @@ class Productcontract extends Contract {
      * Query by Product Type
      *
      * @param {Context} ctx the transaction context
-     * @param {String} product type to be queried
+     * @param {String} productType type to be queried
     */
    async queryByProductType(ctx, productType ) {
         //  GRADED FUNCTION
         //   TASK-4 Complete teh queryString JSON Object to query using the ProductType Index  defined .(META-INF folder)
         //   Construct the JSON Couch DB selectir queryString that uses ProductType Index
         //   Pass the query string built to queryWithueryString
-
+        let queryString={
+            "selector":{
+                "productType": productType
+            },
+            "use_index": ["productTypeIndexDoc", "ProductTypeIndex"]
+        } 
+        let queryResults = this.queryWithQueryString(ctx, queryString);
     return queryResults;
 
 }
@@ -182,7 +194,13 @@ class Productcontract extends Contract {
          //   TASK-5: Write new index for MfgDate and write a CouchDB selector query that uses it to query by MfgDate
          //    Construct the JSON DB selector that uses MfgDateIndex
          //    Pass the query string built to the queryWithQueryString()
-
+        let queryString={
+            "selector":{
+                "productType": productType
+            },
+            "use_index": ["mfg_dateIndexDoc", "mfg_dateIndex"]
+        } 
+        let queryResults = this.queryWithQueryString(ctx, queryString);
     return queryResults;
 
 }
@@ -199,6 +217,16 @@ class Productcontract extends Contract {
         //  and uses the index created for prodcutType
         //  Construct the JSON couch DB selector that uses two product types
         //  Pass the query string to queryWithQueryString
+        let queryString={
+            "selector":{
+                "$or": [
+                    {"$productType": productType1},
+                    {"$productType": productType2}
+                ]
+            },
+            "use_index": ["productTypeIndexDoc", "ProductTypeIndex"]
+        } 
+        let queryResults = this.queryWithQueryString(ctx, queryString);
     return queryResults;
 
 }

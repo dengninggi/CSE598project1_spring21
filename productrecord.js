@@ -24,6 +24,14 @@ class ProductRecord extends State {
     //TASK 2 - Write a getter and a setter for a field called quantity
     // GRADED FUNCTIONS
     //Helper functions
+    getQuantity() {
+        return this.quantity;
+    }
+
+    setQuantity(newQuantity) {
+        return this.quantity = newQuantity;
+    }
+    // Task 2 end
 
     static fromBuffer(buffer) {
         return ProductRecord.deserialize(Buffer.from(JSON.parse(buffer)));
