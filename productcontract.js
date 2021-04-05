@@ -196,7 +196,7 @@ class Productcontract extends Contract {
          //    Pass the query string built to the queryWithQueryString()
         let queryString={
             "selector":{
-                "productType": mfg_date
+                "mfg_date": mfg_date
             },
             "use_index": ["mfg_dateIndexDoc", "mfg_dateIndex"]
         } 
